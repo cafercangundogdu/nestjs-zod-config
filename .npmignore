@@ -1,0 +1,12 @@
+src/
+test/
+example/
+coverage/
+node_modules/
+.git/
+.gitignore
+tsconfig.json
+tsconfig.build.json
+jest.config.ts
+pnpm-lock.yaml
+.env
