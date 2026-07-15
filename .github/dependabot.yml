@@ -1,0 +1,30 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "09:00"
+      timezone: Europe/Istanbul
+    # Mirrors the pnpm minimumReleaseAge supply-chain policy: let new
+    # releases settle before a PR proposes them.
+    cooldown:
+      default-days: 7
+    groups:
+      # One weekly PR for all non-major bumps; majors stay individual so
+      # breaking changes get reviewed on their own.
+      minor-and-patch:
+        applies-to: version-updates
+        update-types:
+          - minor
+          - patch
+    open-pull-requests-limit: 10
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "09:00"
+      timezone: Europe/Istanbul
