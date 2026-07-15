@@ -1,6 +1,6 @@
 {
   "name": "@cafercangundogdu/nestjs-zod-config",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "Type-safe, decorator-free NestJS configuration with Zod validation and plain constructor injection",
   "author": "Cafer Can Gundogdu",
   "license": "MIT",
