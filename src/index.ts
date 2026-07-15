@@ -1,4 +1,4 @@
-export type { TypedConfigModuleOptions } from './config.module';
-export { TypedConfigModule } from './config.module';
-export type { ConfigDefinition, DefineConfigOptions } from './define-config';
-export { defineConfig } from './define-config';
+export type { TypedConfigModuleOptions } from './config.module.js';
+export { TypedConfigModule } from './config.module.js';
+export type { ConfigDefinition, DefineConfigOptions } from './define-config.js';
+export { defineConfig } from './define-config.js';

@@ -4,7 +4,7 @@
 [![npm downloads](https://img.shields.io/npm/dm/@cafercangundogdu/nestjs-zod-config.svg)](https://www.npmjs.com/package/@cafercangundogdu/nestjs-zod-config)
 [![CI](https://github.com/cafercangundogdu/nestjs-zod-config/actions/workflows/ci.yml/badge.svg)](https://github.com/cafercangundogdu/nestjs-zod-config/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue.svg)](https://www.typescriptlang.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.4+-blue.svg)](https://www.typescriptlang.org/)
 [![NestJS](https://img.shields.io/badge/NestJS-10+%20%7C%2011+-ea2845.svg)](https://nestjs.com/)
 [![Zod](https://img.shields.io/badge/Zod-3+%20%7C%204+-3068b7.svg)](https://zod.dev/)
 
@@ -18,6 +18,7 @@ NestJS configuration typically requires `@Inject()` decorators, string-based key
 - **Zod validation at startup** — fail fast with clear error messages
 - **Full type safety** — missing properties, wrong types, and env var typos caught at compile time
 - **Zero global state** — pure `defineConfig()`, explicit `forRoot({ configs })`
+- **Dual ESM/CJS package** — native `import` and `require` entry points, validated with publint and arethetypeswrong
 
 ```typescript
 @Injectable()

@@ -1,6 +1,6 @@
 import { type DynamicModule, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import type { ConfigDefinition } from './define-config';
+import type { ConfigDefinition } from './define-config.js';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type AnyConfigDefinition = ConfigDefinition<any>;

@@ -5,26 +5,43 @@
   "author": "Cafer Can Gundogdu",
   "license": "MIT",
   "type": "commonjs",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/cjs/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "default": "./dist/index.js"
-    }
+      "import": {
+        "types": "./dist/esm/index.d.ts",
+        "default": "./dist/esm/index.js"
+      },
+      "require": {
+        "types": "./dist/cjs/index.d.ts",
+        "default": "./dist/cjs/index.js"
+      }
+    },
+    "./package.json": "./package.json"
   },
+  "sideEffects": false,
   "files": [
     "dist"
   ],
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
-    "build": "tsc -p tsconfig.build.json",
-    "test": "jest",
+    "clean": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\"",
+    "build": "pnpm run clean && pnpm run build:cjs && pnpm run build:esm && node scripts/dist-fixup.mjs",
+    "build:cjs": "tsc -p tsconfig.build.json",
+    "build:esm": "tsc -p tsconfig.build.esm.json",
+    "typecheck": "tsc -p tsconfig.json",
+    "test": "pnpm run typecheck && jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "lint": "biome check .",
     "lint:fix": "biome check --write .",
     "format": "biome format --write .",
-    "prepublishOnly": "pnpm run build",
+    "check:package": "publint && attw --pack .",
+    "prepublishOnly": "pnpm run build && pnpm run check:package",
     "prepare": "husky"
   },
   "keywords": [
@@ -47,23 +64,24 @@
     "zod": "^3.20.0 || ^4.0.0"
   },
   "devDependencies": {
-    "@arethetypeswrong/cli": "^0.18.2",
-    "@biomejs/biome": "^2.4.7",
-    "@commitlint/cli": "^20.5.0",
-    "@commitlint/config-conventional": "^20.5.0",
-    "@nestjs/common": "^11.1.17",
-    "@nestjs/config": "^4.0.3",
-    "@nestjs/core": "^11.1.17",
-    "@nestjs/testing": "^11.1.17",
+    "@arethetypeswrong/cli": "^0.18.5",
+    "@biomejs/biome": "^2.5.4",
+    "@commitlint/cli": "^21.2.1",
+    "@commitlint/config-conventional": "^21.2.0",
+    "@nestjs/common": "^11.1.28",
+    "@nestjs/config": "^4.0.4",
+    "@nestjs/core": "^11.1.28",
+    "@nestjs/testing": "^11.1.28",
+    "@swc/core": "^1.15.43",
+    "@swc/jest": "^0.2.39",
     "@types/jest": "^30.0.0",
-    "@types/node": "^25.5.0",
+    "@types/node": "^26.1.1",
     "husky": "^9.1.7",
-    "jest": "^30.3.0",
-    "publint": "^0.3.18",
+    "jest": "^30.4.2",
+    "publint": "^0.3.21",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.2",
-    "ts-jest": "^29.4.6",
-    "typescript": "^5.9.3",
-    "zod": "^4.3.6"
+    "typescript": "^7.0.2",
+    "zod": "^4.4.3"
   }
 }

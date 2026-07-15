@@ -1,8 +1,10 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
+    "noEmit": false,
+    "declaration": true,
+    "outDir": "./dist/cjs",
     "rootDir": "./src"
   },
-  "include": ["src/**/*"],
-  "exclude": ["test/**/*", "example/**/*", "dist/**/*", "node_modules/**/*"]
+  "include": ["src/**/*"]
 }

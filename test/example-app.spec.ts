@@ -24,8 +24,8 @@ describe('Example App (e2e)', () => {
   });
 
   it('should inject all configs into UserService', async () => {
-    const { AppModule } = await import('../example/app.module');
-    const { UserService } = await import('../example/user.service');
+    const { AppModule } = await import('../example/app.module.js');
+    const { UserService } = await import('../example/user.service.js');
 
     const module = await Test.createTestingModule({
       imports: [AppModule],
@@ -44,10 +44,10 @@ describe('Example App (e2e)', () => {
   });
 
   it('should resolve configs directly from DI container', async () => {
-    const { AppModule } = await import('../example/app.module');
-    const { AuthConfig } = await import('../example/config/auth.config');
-    const { DatabaseConfig } = await import('../example/config/database.config');
-    const { RedisConfig } = await import('../example/config/redis.config');
+    const { AppModule } = await import('../example/app.module.js');
+    const { AuthConfig } = await import('../example/config/auth.config.js');
+    const { DatabaseConfig } = await import('../example/config/database.config.js');
+    const { RedisConfig } = await import('../example/config/redis.config.js');
 
     const module = await Test.createTestingModule({
       imports: [AppModule],
