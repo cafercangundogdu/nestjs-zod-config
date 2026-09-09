@@ -2,7 +2,3 @@ allowBuilds:
   '@nestjs/core': true
   '@swc/core': true
   unrs-resolver: true
-onlyBuiltDependencies:
-  - '@nestjs/core'
-  - '@swc/core'
-  - unrs-resolver
