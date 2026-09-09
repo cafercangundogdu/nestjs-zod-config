@@ -177,9 +177,9 @@ The generic chain is fully connected with compile-time checks:
 | `zod`               | ^3.20.0 \|\| ^4.0.0  |
 | `reflect-metadata`  | ^0.1.13 \|\| ^0.2.0  |
 | `typescript`        | >= 5.4 (requires `NoInfer`) |
-| `node`              | >= 20 |
+| `node`              | >= 22.12.0 |
 
-NestJS 12 packages are ESM-only. This library ships both CJS and ESM builds, so it works from either module system. A CommonJS app on NestJS 12 relies on Node's `require(esm)`, which is available without flags since Node 20.19 and 22.12.
+NestJS 12 packages are ESM-only. This library ships both CJS and ESM builds, so it works from either module system. A CommonJS app on NestJS 12 relies on Node's `require(esm)`, which is available without flags since Node 22.12 — the same floor as `engines.node`.
 
 ## Development
 
