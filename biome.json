@@ -36,6 +36,15 @@
     }
   },
   "files": {
-    "includes": ["src/**", "test/**", "example/**", "*.json", "*.js", "*.ts", "*.mts"]
+    "includes": [
+      "src/**",
+      "test/**",
+      "example/**",
+      "*.json",
+      "*.js",
+      "*.ts",
+      "*.mts",
+      "!.release-please-manifest.json"
+    ]
   }
 }
