@@ -7,10 +7,9 @@
 # here — publish.yml runs on the resulting push to main and publishes the new
 # version with provenance.
 #
-# With the default GITHUB_TOKEN the release PR gets no CI checks: GitHub does
-# not trigger workflows for PRs created by that token. Adding a
-# RELEASE_PLEASE_TOKEN secret (a PAT with contents + pull-requests write) makes
-# the PR behave like a normal one and run CI.
+# With the default GITHUB_TOKEN, CI on the release PR is created but waits for
+# a manual approval on the PR's checks. Adding a RELEASE_PLEASE_TOKEN secret (a
+# PAT with contents + pull-requests write) makes it run automatically.
 
 name: Release Please
 
