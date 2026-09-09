@@ -210,7 +210,12 @@ Releases are driven by [release-please](https://github.com/googleapis/release-pl
 
 Merging that PR bumps `package.json` and `.release-please-manifest.json`, rewrites `CHANGELOG.md`, and creates the `vX.Y.Z` tag and GitHub release. The publish workflow then runs on that push to `main` and publishes to npm with provenance — it skips versions already on npm, so ordinary merges are no-ops.
 
-With the default `GITHUB_TOKEN`, CI on the release PR is created but held for a manual approval ("Approve and run" on the PR's checks, or `gh api -X POST repos/<owner>/<repo>/actions/runs/<run-id>/approve`). Add a `RELEASE_PLEASE_TOKEN` secret (a PAT with contents + pull-requests write) to have it run automatically. Note that release-please only refreshes the PR branch when the release content changes, so a fix landed on main afterwards is not in the PR until it is recreated (close it and re-run the workflow).
+Two limits of the default `GITHUB_TOKEN` are worth knowing:
+
+- CI on the release PR is created but held for a manual approval ("Approve and run" on the PR's checks, or `gh api -X POST repos/<owner>/<repo>/actions/runs/<run-id>/approve`).
+- It can only create a tag or release on the current head of `main`. release-please tags the release PR's merge commit, so this works on the push that merges the PR, but if anything else lands on `main` before that run finishes, every retry fails with `Resource not accessible by integration`. Recover by hand: push the tag onto the merge commit, create the release from the CHANGELOG entry, and move the merged PR's label from `autorelease: pending` to `autorelease: tagged` so release-please stops retrying.
+
+A `RELEASE_PLEASE_TOKEN` secret (a fine-grained PAT with contents, pull-requests and workflows write) removes both limits. release-please also only refreshes the PR branch when the release content changes, so a fix landed on `main` afterwards is not in the PR until it is recreated (close it and re-run the workflow).
 
 ## License
 
