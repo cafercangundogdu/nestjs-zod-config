@@ -1,4 +1,59 @@
 allowBuilds:
   '@nestjs/core': true
   '@swc/core': true
-  unrs-resolver: true
+# Supply-chain policy: a dependency has to have been on the registry for a
+# week (10080 minutes) before pnpm will install it. Mirrors the Dependabot
+# cooldown in .github/dependabot.yml.
+minimumReleaseAge: 10080
+# Temporary bypasses: these exact releases were already the current latest
+# when the toolchain was upgraded, so they were younger than the policy at
+# that moment. All of them are past the 7-day mark after 2026-09-14 — the
+# whole list can be deleted then, with no version changes.
+minimumReleaseAgeExclude:
+  - '@biomejs/biome@2.5.12'
+  - '@biomejs/cli-darwin-arm64@2.5.12'
+  - '@biomejs/cli-darwin-x64@2.5.12'
+  - '@biomejs/cli-linux-arm64-musl@2.5.12'
+  - '@biomejs/cli-linux-arm64@2.5.12'
+  - '@biomejs/cli-linux-x64-musl@2.5.12'
+  - '@biomejs/cli-linux-x64@2.5.12'
+  - '@biomejs/cli-win32-arm64@2.5.12'
+  - '@biomejs/cli-win32-x64@2.5.12'
+  - '@rolldown/binding-android-arm-eabi@1.2.7'
+  - '@rolldown/binding-android-arm64@1.2.7'
+  - '@rolldown/binding-darwin-arm64@1.2.7'
+  - '@rolldown/binding-darwin-x64@1.2.7'
+  - '@rolldown/binding-freebsd-x64@1.2.7'
+  - '@rolldown/binding-linux-arm-gnueabihf@1.2.7'
+  - '@rolldown/binding-linux-arm64-gnu@1.2.7'
+  - '@rolldown/binding-linux-arm64-musl@1.2.7'
+  - '@rolldown/binding-linux-ppc64-gnu@1.2.7'
+  - '@rolldown/binding-linux-s390x-gnu@1.2.7'
+  - '@rolldown/binding-linux-x64-gnu@1.2.7'
+  - '@rolldown/binding-linux-x64-musl@1.2.7'
+  - '@rolldown/binding-openharmony-arm64@1.2.7'
+  - '@rolldown/binding-win32-arm64-msvc@1.2.7'
+  - '@rolldown/binding-win32-x64-msvc@1.2.7'
+  - '@swc/core-darwin-arm64@1.16.2'
+  - '@swc/core-darwin-x64@1.16.2'
+  - '@swc/core-linux-arm-gnueabihf@1.16.2'
+  - '@swc/core-linux-arm64-gnu@1.16.2'
+  - '@swc/core-linux-arm64-musl@1.16.2'
+  - '@swc/core-linux-ppc64-gnu@1.16.2'
+  - '@swc/core-linux-s390x-gnu@1.16.2'
+  - '@swc/core-linux-x64-gnu@1.16.2'
+  - '@swc/core-linux-x64-musl@1.16.2'
+  - '@swc/core-win32-arm64-msvc@1.16.2'
+  - '@swc/core-win32-ia32-msvc@1.16.2'
+  - '@swc/core-win32-x64-msvc@1.16.2'
+  - '@swc/core@1.16.2'
+  - '@types/node@26.5.0'
+  - '@vitest/coverage-v8@5.0.0'
+  - '@vitest/mocker@5.0.0'
+  - '@vitest/spy@5.0.0'
+  - 'fast-uri@3.1.7'
+  - 'postcss@8.5.28'
+  - 'rolldown@1.2.7'
+  - 'tinyexec@1.3.1'
+  - 'unplugin-swc@1.6.0'
+  - 'vitest@5.0.0'
