@@ -181,6 +181,37 @@ The generic chain is fully connected with compile-time checks:
 
 NestJS 12 packages are ESM-only. This library ships both CJS and ESM builds, so it works from either module system. A CommonJS app on NestJS 12 relies on Node's `require(esm)`, which is available without flags since Node 20.19 and 22.12.
 
+## Development
+
+Requires Node 22.12+ and pnpm 12. The `packageManager` field pins the exact pnpm version: any installed pnpm 10+ switches to it automatically, and Corepack works too on Node versions that still ship it (up to 24).
+
+```bash
+pnpm install
+pnpm test              # typecheck + Vitest
+pnpm run test:watch
+pnpm run test:cov
+pnpm run lint          # Biome
+pnpm run typecheck
+pnpm run build         # CJS + ESM
+pnpm run check:package # publint + are-the-types-wrong
+```
+
+CI runs the suite on Node 22/24 × NestJS 11/12 — the lockfile pins NestJS 12 and the 11 leg swaps in `@nestjs/common`/`core`/`testing` 11 with `@nestjs/config` 4, which is that line's release of the config package.
+
+pnpm enforces a 7-day `minimumReleaseAge` supply-chain policy in `pnpm-workspace.yaml`, mirroring the Dependabot cooldown, so a brand-new release will not install until it has settled.
+
+Commits follow [Conventional Commits](https://www.conventionalcommits.org/), enforced by commitlint via a husky hook.
+
+Changelog: [CHANGELOG.md](CHANGELOG.md).
+
+### Releasing
+
+Releases are driven by [release-please](https://github.com/googleapis/release-please). Every push to `main` refreshes a `chore(main): release x.y.z` pull request built from the Conventional Commits since the last tag — `feat` bumps the minor, `fix` the patch, and while the package is below 1.0.0 a `!` / `BREAKING CHANGE` bumps the minor too.
+
+Merging that PR bumps `package.json` and `.release-please-manifest.json`, rewrites `CHANGELOG.md`, and creates the `vX.Y.Z` tag and GitHub release. The publish workflow then runs on that push to `main` and publishes to npm with provenance — it skips versions already on npm, so ordinary merges are no-ops.
+
+With the default `GITHUB_TOKEN` the release PR runs no CI checks, because GitHub does not trigger workflows for PRs that token creates — add a `RELEASE_PLEASE_TOKEN` secret (a PAT with contents + pull-requests write) to fix that.
+
 ## License
 
 [MIT](LICENSE)

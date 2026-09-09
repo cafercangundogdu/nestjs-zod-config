@@ -1,0 +1,56 @@
+# Release automation.
+#
+# release-please reads the Conventional Commits landed on main and keeps a
+# `chore(main): release x.y.z` pull request up to date. Merging that PR bumps
+# package.json + .release-please-manifest.json, rewrites CHANGELOG.md, and
+# creates the `vX.Y.Z` tag and the GitHub release. npm publishing is not done
+# here — publish.yml runs on the resulting push to main and publishes the new
+# version with provenance.
+#
+# With the default GITHUB_TOKEN the release PR gets no CI checks: GitHub does
+# not trigger workflows for PRs created by that token. Adding a
+# RELEASE_PLEASE_TOKEN secret (a PAT with contents + pull-requests write) makes
+# the PR behave like a normal one and run CI.
+
+name: Release Please
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: release-please
+  cancel-in-progress: false
+
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v7
+
+      # release-please only takes over once the version recorded in the
+      # manifest has an actual release to compare against. Until then the
+      # maintainer has to create it by hand, once.
+      - name: Check manifest version is released
+        id: guard
+        run: |
+          VERSION=$(node -p "require('./.release-please-manifest.json')['.']")
+          if git ls-remote --exit-code --tags origin "refs/tags/v${VERSION}" >/dev/null 2>&1; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+            echo "Tag v${VERSION} exists, handing over to release-please."
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::Manifest version ${VERSION} has not been released yet. Create the release once with: gh release create v${VERSION} --title v${VERSION} --notes-file <(sed -n '/^## \[${VERSION}\]/,/^## \[/p' CHANGELOG.md) — release-please takes over from the next push onwards."
+          fi
+
+      - uses: googleapis/release-please-action@v4
+        if: steps.guard.outputs.exists == 'true'
+        with:
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json
+          token: ${{ secrets.RELEASE_PLEASE_TOKEN || secrets.GITHUB_TOKEN }}
