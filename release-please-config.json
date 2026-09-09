@@ -4,5 +4,9 @@
   "bump-minor-pre-major": true,
   "bump-patch-for-minor-pre-major": false,
   "include-v-in-tag": true,
-  "packages": { ".": {} }
+  "include-component-in-tag": false,
+  "pull-request-title-pattern": "chore${scope}: release ${version}",
+  "packages": {
+    ".": {}
+  }
 }
