@@ -1,5 +1,6 @@
 import 'reflect-metadata';
 import { Test } from '@nestjs/testing';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 describe('Example App (e2e)', () => {
   beforeEach(() => {
@@ -20,7 +21,7 @@ describe('Example App (e2e)', () => {
     delete process.env.DATABASE_POOL_SIZE;
     delete process.env.REDIS_HOST;
     delete process.env.REDIS_PORT;
-    jest.resetModules();
+    vi.resetModules();
   });
 
   it('should inject all configs into UserService', async () => {

@@ -5,7 +5,7 @@
 [![CI](https://github.com/cafercangundogdu/nestjs-zod-config/actions/workflows/ci.yml/badge.svg)](https://github.com/cafercangundogdu/nestjs-zod-config/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.4+-blue.svg)](https://www.typescriptlang.org/)
-[![NestJS](https://img.shields.io/badge/NestJS-10+%20%7C%2011+-ea2845.svg)](https://nestjs.com/)
+[![NestJS](https://img.shields.io/badge/NestJS-11+%20%7C%2012+-ea2845.svg)](https://nestjs.com/)
 [![Zod](https://img.shields.io/badge/Zod-3+%20%7C%204+-3068b7.svg)](https://zod.dev/)
 
 > Type-safe, decorator-free NestJS configuration with Zod validation and plain constructor injection.
@@ -172,11 +172,14 @@ The generic chain is fully connected with compile-time checks:
 
 | Dependency          | Supported versions |
 | ------------------- | ------------------ |
-| `@nestjs/common`    | ^10.0.0 \|\| ^11.0.0 |
-| `@nestjs/config`    | ^3.0.0 \|\| ^4.0.0   |
+| `@nestjs/common`    | ^11.0.0 \|\| ^12.0.0 |
+| `@nestjs/config`    | ^4.0.0 \|\| ^12.0.0  |
 | `zod`               | ^3.20.0 \|\| ^4.0.0  |
 | `reflect-metadata`  | ^0.1.13 \|\| ^0.2.0  |
 | `typescript`        | >= 5.4 (requires `NoInfer`) |
+| `node`              | >= 20 |
+
+NestJS 12 packages are ESM-only. This library ships both CJS and ESM builds, so it works from either module system. A CommonJS app on NestJS 12 relies on Node's `require(esm)`, which is available without flags since Node 20.19 and 22.12.
 
 ## License
 

@@ -1,5 +1,6 @@
 import 'reflect-metadata';
 import { Test } from '@nestjs/testing';
+import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { z } from 'zod';
 import { defineConfig, TypedConfigModule } from '../src';
 
