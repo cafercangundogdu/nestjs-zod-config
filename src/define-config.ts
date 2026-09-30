@@ -11,9 +11,9 @@ type AnyConfigFactory = ReturnType<typeof registerAs<ConfigObject, ConfigFactory
 
 type AbstractClass<T> = abstract new (...args: any[]) => T;
 
-export interface ConfigDefinition<TConfig> {
+export interface ConfigDefinition<TConfig, TSchema extends z.ZodType = z.ZodType> {
   readonly name: string;
-  readonly schema: z.ZodType;
+  readonly schema: TSchema;
   readonly namespace: AnyConfigFactory;
   readonly provider: {
     readonly provide: AbstractClass<TConfig>;
@@ -31,7 +31,7 @@ export interface DefineConfigOptions<TShape extends z.ZodRawShape, TConfig exten
 
 export function defineConfig<TShape extends z.ZodRawShape, TConfig extends ConfigObject>(
   options: DefineConfigOptions<TShape, TConfig>,
-): ConfigDefinition<TConfig> {
+): ConfigDefinition<TConfig, z.ZodObject<TShape>> {
   const { name, token, schema, map } = options;
 
   const ns = registerAs(name, () => map(schema.parse(process.env) as z.infer<z.ZodObject<TShape>>));

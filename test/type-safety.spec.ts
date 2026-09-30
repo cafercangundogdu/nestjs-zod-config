@@ -1,4 +1,4 @@
-import { describe, it } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { z } from 'zod';
 import { defineConfig } from '../src';
 
@@ -68,5 +68,19 @@ describe('compile-time type safety', () => {
     // Provider token is typed as AbstractClass<NumCfg>
     const _check: abstract new (...args: never[]) => NumCfg = def.provider.provide;
     void _check;
+  });
+  it('keeps the output type of the schema on the definition', () => {
+    const def = defineConfig({
+      name: 't6',
+      token: TestCfg,
+      schema: z.object({ HOST: z.string(), PORT: z.coerce.number() }),
+      map: (env) => ({ host: env.HOST, port: env.PORT }),
+    });
+
+    // Regression: up to 0.3.0 `schema` was a bare `z.ZodType`, so `parsed` was `unknown`.
+    const parsed = def.schema.parse({ HOST: 'db', PORT: '5432' });
+
+    expect(parsed.HOST).toBe('db');
+    expect(parsed.PORT).toBe(5432);
   });
 });
